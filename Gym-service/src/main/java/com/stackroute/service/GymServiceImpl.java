@@ -347,7 +347,7 @@ public class GymServiceImpl implements GymService {
 	}
 
 	@Override
-	public Integer updateMaximumLimit(String slotId) {
+	public Integer updateMaximumLimitWhenBooked(String slotId) {
 		Optional<Slot> existingSlotOp = slotRepository.findById(slotId);
 		Integer maximumLimit = null;
 		if(existingSlotOp.isPresent()) {
@@ -358,6 +358,23 @@ public class GymServiceImpl implements GymService {
 				slot.setMaximumLimit(maximumLimit);
 				slotRepository.save(slot);
 			}
+		} else {
+			throw new NotFoundException();
+		}
+		return maximumLimit;
+	}
+	
+	@Override
+	public Integer updateMaximumLimitWhenCanceled(String slotId) {
+		Optional<Slot> existingSlotOp = slotRepository.findById(slotId);
+		Integer maximumLimit = null;
+		if(existingSlotOp.isPresent()) {
+			Slot slot = existingSlotOp.get();
+			maximumLimit = slot.getMaximumLimit();
+			maximumLimit++;
+			slot.setMaximumLimit(maximumLimit);
+			slotRepository.save(slot);
+
 		} else {
 			throw new NotFoundException();
 		}

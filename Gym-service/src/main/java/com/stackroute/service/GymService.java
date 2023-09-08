@@ -48,7 +48,8 @@ public interface GymService {
     public Trainer updateTrainer(String trainerId, Trainer updatedTrainer);
     public Slot updateSlot(String slotId, Slot updatedSlot);
 	public MediaFile updateMediaFile(String mediaId, MediaFile updatedMediaFile);
-	public Integer updateMaximumLimit(String slotId);
+	public Integer updateMaximumLimitWhenBooked(String slotId);
+	public Integer updateMaximumLimitWhenCanceled(String slotId);
 	
 	public Map<String, Object> uploadMediaFile(MultipartFile mediaFile);
     public boolean deleteMediaFileFromCloud(String mediaUrl);

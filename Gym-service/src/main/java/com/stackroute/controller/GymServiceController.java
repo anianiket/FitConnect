@@ -159,10 +159,10 @@ public class GymServiceController {
 	}
 	
 	@PutMapping("slots/booked/{slotId}")
-	@ApiOperation(value = "Update maximumLimit by slotId", notes = "Update the maximumLimit of slot by slotId when ever the respective slot is booked")
+	@ApiOperation(value = "Update maximumLimit by slotId when booked", notes = "Update the maximumLimit of slot by slotId when ever the respective slot is booked")
 	public ResponseEntity<?> updateMaximumLimitBySlotId(@PathVariable("slotId") String slotId) {
 		try {
-			Integer maximumLimit = gymService.updateMaximumLimit(slotId);
+			Integer maximumLimit = gymService.updateMaximumLimitWhenBooked(slotId);
 			if(maximumLimit != null) {
 				return ResponseEntity.ok(maximumLimit);
 			} else {
@@ -172,6 +172,21 @@ public class GymServiceController {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
+	}
+	
+	@PutMapping("slots/cancel/{slotId}")
+	@ApiOperation(value = "Update maximumLimit by slotId when canceled", notes = "Update the maximumLimit of slot by slotId when the respective slot is canceled")
+	public ResponseEntity<?> updateMaximumLimitBySlotIdWhenCanceled(@PathVariable("slotId") String slotId) {
+	    try {
+	        Integer maximumLimit = gymService.updateMaximumLimitWhenCanceled(slotId);
+	        if (maximumLimit != null) {
+	            return ResponseEntity.ok(maximumLimit);
+	        } else {
+	            throw new NotFoundException();
+	        }
+	    } catch (Exception ex) {
+	        throw new RuntimeException(ex);
+	    }
 	}
 	
     @GetMapping("/slots/by-date/{slotDate}")
