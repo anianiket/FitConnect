@@ -2,6 +2,11 @@
     flex: 1 1 auto;
 }
 
+.avatar-container {
+    display: flex;
+    align-items: center;
+}
+
 .avatar {
     height: 44px;
     width: 44px;
@@ -9,10 +14,6 @@
     border: 4px solid var(--white-color);
     margin-left: 10px;
     cursor: pointer;
-}
-
-.mat-mdc-card-avatar {
-    margin-bottom: 0 !important;
 }
 
 .mat-toolbar {
@@ -27,6 +28,6 @@
     font-size: 1.7rem;
 }
 
-.product-title > span {
+.product-title>span {
     color: var(--white-color);
 }
