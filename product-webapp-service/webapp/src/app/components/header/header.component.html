@@ -4,11 +4,11 @@
     </a>
     <a href="/" class="product-title"><span>{{productTitle[0]}}</span>{{productTitle[1]}}</a>
     <span class="spacer"></span>
-    <ng-container *ngIf="true;">
+    <ng-container *ngIf="isLoggedIn;">
         <span>{{userName}}</span>
 
 
-        <img src="https://avatars.githubusercontent.com/u/71878747?v=4" class="avatar" />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCpY5LtQ47cqncKMYWucFP41NtJvXU06-tnQ&usqp=CAU" class="avatar" mat-button [matMenuTriggerFor]="beforeMenu" />
         <mat-menu #beforeMenu="matMenu" xPosition="before">
             <a mat-menu-item tabindex="0">Sign Out</a>
 
