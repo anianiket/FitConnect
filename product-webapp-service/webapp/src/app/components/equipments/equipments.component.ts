@@ -1,49 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Equipment } from 'src/app/models/equipment.model';
+import { GymService } from 'src/app/services/gym.service';
 
 @Component({
   selector: 'app-equipments',
   templateUrl: './equipments.component.html',
   styleUrls: ['./equipments.component.css']
 })
-export class EquipmentsComponent {
-  equipmentList: Equipment[] = [
-    {
-      equipmentId: '1',
-      equipmentName: 'Treadmill',
-      equipmentImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOrz93yREjk92BUijB8x7pMdFzD3qEEhrL1g&usqp=CAU',
-      equipmentDescription: 'A fitness treadmill',
-      quantity: 5,
-    },
-    {
-      equipmentId: '2',
-      equipmentName: 'Exercise Bike',
-      equipmentImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvnjw-3I1vNy5P5Vc9aOdUOTEq5S9yDERbaA&usqp=CAU',
-      equipmentDescription: 'An exercise bike for cardio workouts',
-      quantity: 3,
-    },
-    {
-      equipmentId: '3',
-      equipmentName: 'Dumbbells',
-      equipmentImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0_dEI33j2IO6DlKIQ5q9pT_SX9Uzzp945hA&usqp=CAU', 
-      equipmentDescription: 'A set of dumbbells for strength training',
-      quantity: 10,
-    },
-    {
-      equipmentId: '4',
-      equipmentName: 'Elliptical Trainer',
-      equipmentImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIwtbmxevQ6hXFe6eaaPaGXiRu4Mawj3e4pA&usqp=CAU', 
-      equipmentDescription: 'An elliptical trainer for low-impact workouts',
-      quantity: 2,
-    },
-    {
-      equipmentId: '5',
-      equipmentName: 'Rowing Machine',
-      equipmentImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrvI1XKbLUCbA7gC-X_adiZnrFk6U4qiCFtg&usqp=CAU', 
-      equipmentDescription: 'A rowing machine for full-body workouts',
-      quantity: 4,
-    },
-  ];
+export class EquipmentsComponent implements OnInit {
+
+  constructor(private gymService: GymService) { }
+
+  ngOnInit() {
+    this.getEquipmentList();
+  }
+  equipmentList: Equipment[] = [];
 
   selectedEquipment: Equipment | null = null;
   formMode = false;
@@ -57,11 +28,7 @@ export class EquipmentsComponent {
     this.selectedEquipment = equipment;
   }
 
-  ngOnInit() {
-    if (this.equipmentList.length > 0) {
-      this.selectedEquipment = this.equipmentList[0];
-    }
-  }
+
 
   updateEquipmentForm(equipment: Equipment) {
     this.formMode = true;
@@ -82,50 +49,83 @@ export class EquipmentsComponent {
     this.selectedImageFile = null;
   }
 
+  closeForm() {
+    this.formMode = false;
+    this.updateMode = false;
+  }
+
+  private getEquipmentList() {
+    this.gymService.getEquipmentList().subscribe((data) => {
+      console.log("Equipment List:", data);
+      this.equipmentList = data;
+      if (data == null || data.length == 0) {
+        this.addEquipmentForm();
+      } else {
+        this.selectedEquipment = this.equipmentList[0];
+      }
+    });
+  }
+
   createEquipment() {
-    if (this.selectedImageFile) {
-      const newEquipment: Equipment = {
-        equipmentId: (this.equipmentList.length + 1).toString(),
-        equipmentName: this.newEquipmentName,
-        equipmentDescription: this.newEquipmentDescription,
-        quantity: this.newQuantity,
-        equipmentImage: 'your_image_url_or_path.jpg',
-      };
+    if (this.selectedImageFile && this.newEquipmentName && this.newEquipmentDescription && this.newQuantity) {
+      const equipment = new FormData();
+      equipment.append('equipmentName', this.newEquipmentName);
+      equipment.append('equipmentDescription', this.newEquipmentDescription);
+      equipment.append('quantity', this.newQuantity.toString());
+      equipment.append('equipmentImage', this.selectedImageFile);
 
-      this.equipmentList.push(newEquipment);
-
-      this.newEquipmentName = '';
-      this.newEquipmentDescription = '';
-      this.newQuantity = 0;
-      this.selectedImageFile = null;
-
-      this.formMode = false;
+      this.gymService.addAnEquipment(equipment).subscribe((data) => {
+        console.log("Equipment Added:", data);
+        this.getEquipmentList();
+        this.formMode = false;
+        this.updateMode = false;
+        this.newEquipmentName = '';
+        this.newEquipmentDescription = '';
+        this.newQuantity = 0;
+        this.selectedImageFile = null;
+      }
+      );
     }
   }
 
   updateEquipment() {
     if (this.selectedEquipment) {
-      const index = this.equipmentList.findIndex(equipment => equipment.equipmentId === this.selectedEquipment?.equipmentId);
+      const equipment = new FormData();
+      equipment.append('equipmentName', this.newEquipmentName);
+      equipment.append('equipmentDescription', this.newEquipmentDescription);
+      equipment.append('quantity', this.newQuantity.toString());
+      if (this.selectedImageFile) {
+        equipment.append('equipmentImage', this.selectedImageFile);
+      }
 
-      if (index !== -1) {
-        this.equipmentList[index].equipmentName = this.newEquipmentName;
-        this.equipmentList[index].equipmentDescription = this.newEquipmentDescription;
-        this.equipmentList[index].quantity = this.newQuantity;
-
+      this.gymService.updateEquipment(this.selectedEquipment.equipmentId, equipment).subscribe((data) => {
+        console.log("Equipment Updated:", data);
+        this.getEquipmentList();
+        this.formMode = false;
+        this.updateMode = false;
         this.newEquipmentName = '';
         this.newEquipmentDescription = '';
         this.newQuantity = 0;
         this.selectedImageFile = null;
-
-        this.formMode = false;
-        this.updateMode = false;
-
       }
+      );
     }
   }
 
   deleteEquipment(equipmentId: string) {
-    
+    if (this.selectedEquipment && this.selectedEquipment.equipmentId == equipmentId && confirm("Are you sure you want to delete this equipment?")) {
+
+      this.gymService.deleteEquipment(equipmentId).subscribe(
+        (data) => {
+          console.log("Equipment is successfully deleted");
+          this.getEquipmentList();
+          this.closeForm();
+        }
+        , (error) => {
+          console.log("Error in deleting equipment", error);
+        });
+    }
+
   }
 
   isEquipmentAvailable(equipment: Equipment): boolean {

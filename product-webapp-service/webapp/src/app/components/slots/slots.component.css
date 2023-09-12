@@ -19,6 +19,7 @@
     flex-basis: 60%;
     width: 65%;
     padding: 20px;
+    position: relative;
 }
 
 .slot-list-title {
@@ -119,4 +120,45 @@
 .slot-form {
     display: flex;
     flex-direction: column;
+}
+
+.close-form {
+    position: fixed;
+    right: 20px;
+    color: var(--red-color);
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.trainers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.trainer-card {
+    width: 120px; 
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.trainer-card:hover {
+    background-color: #f5f5f5;
+}
+
+.trainer-image img {
+    width: 120px;
+    height: 120px; 
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.trainer-name {
+    font-weight: bold;
+    margin-top: 8px;
 }

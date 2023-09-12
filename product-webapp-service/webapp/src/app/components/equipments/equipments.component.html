@@ -14,13 +14,13 @@
         </div>
     </div>
 
-    <div class="equipment-details" *ngIf="selectedEquipment && !formMode">
+    <div class="equipment-details" *ngIf="!formMode">
 
         <button mat-raised-button color="warn" (click)="addEquipmentForm()" class="full-width-button">
             <span class="large-bold-text">+ ADD A NEW EQUIPMENT</span>
         </button>
 
-        <div class="equipment-details-card">
+        <div class="equipment-details-card" *ngIf="selectedEquipment && !formMode">
             <h2>Equipment Details</h2>
             <div class="equipment-image">
                 <img [src]="selectedEquipment.equipmentImage" alt="{{ selectedEquipment.equipmentName }}">
@@ -43,6 +43,7 @@
     </div>
 
     <div class="equipment-details" *ngIf="formMode">
+        <span class="close-form" (click)="closeForm()"><mat-icon>close</mat-icon></span>
         <h2>{{ updateMode ? 'Update Equipment' : 'Add Equipment' }}</h2>
         <form class="equipment-form" (submit)="updateMode ? updateEquipment() : createEquipment()">
             <mat-form-field>

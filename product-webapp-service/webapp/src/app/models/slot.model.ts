@@ -1,7 +1,7 @@
 export interface Slot {
     slotId: string;
-    startTime: Date;
-    endTime: Date;
+    startTime: string;
+    endTime: string;
     maximumLimit: number;
     slotDate: string;
     trainerList: string[];

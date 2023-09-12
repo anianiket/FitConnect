@@ -22,6 +22,7 @@ import com.stackroute.exception.DuplicateEntityException;
 import com.stackroute.exception.NotFoundException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/gym-service")
 @Api(value = "Gym Service API", description = "Operations related to the Gym Service")
 public class GymServiceController {
@@ -404,7 +405,8 @@ public class GymServiceController {
 
 		try {
 			Equipment equipment = new Equipment();
-			if(!equipmentImage.isEmpty()) {
+			System.out.println(equipmentImage);
+			if(equipmentImage != null && !equipmentImage.isEmpty()) {
 				String mediaUrl = uploadMedia(equipmentImage);
 				equipment.setEquipmentImage(mediaUrl);
 			}
@@ -458,7 +460,7 @@ public class GymServiceController {
 			@RequestParam(value = "mediaCategory", required = false) String mediaCategory) {
 		try {
 			MediaFile mediaFile = new MediaFile();
-			if(!media.isEmpty()) {
+			if(media != null && !media.isEmpty()) {
 				String mediaUrl = uploadMedia(media);
 				mediaFile.setMediaUrl(mediaUrl);
 			}
@@ -491,7 +493,7 @@ public class GymServiceController {
 			@RequestParam(value = "trainerBio", required = false) String trainerBio) {
 		try {
 			Trainer trainer = new Trainer();
-			if(!trainerImage.isEmpty()) {
+			if(trainerImage != null && !trainerImage.isEmpty()) {
 				String mediaUrl = uploadMedia(trainerImage);
 				trainer.setTrainerImage(mediaUrl);
 			}

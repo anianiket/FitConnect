@@ -5,8 +5,9 @@
         </div>
     </div>
     <div class="add-media-card" *ngIf="formMode">
+        
         <form class="media-form" (submit)="updateMode ? updateMediaFile() :createMediaFile()">
-            <h2>Add MediaFile</h2>
+            <h2>Add MediaFile<span class="close-form" (click)="closeForm()"><mat-icon>close</mat-icon></span></h2>
             <mat-form-field>
                 <mat-label for="name">Name</mat-label>
                 <input matInput type="text" id="name" name="name" required [(ngModel)]="newMediaName">

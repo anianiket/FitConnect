@@ -19,12 +19,13 @@
     flex-basis: 60%;
     width: 65%;
     padding: 20px;
+    position: relative;
 }
 
 .trainer-list-title {
     font-size: 24px;
     margin-top: 0;
-    padding-top: 20px ;
+    padding-top: 20px;
 }
 
 .trainer-card {
@@ -103,7 +104,7 @@
     color: var(--orange-color);
     border: 1px solid var(--orange-highlight);
     background-color: var(--orange-highlight);
-    padding: 3px 10px ;
+    padding: 3px 10px;
     width: fit-content;
 }
 
@@ -112,4 +113,10 @@
     flex-direction: column;
 }
 
-  
+.close-form {
+    position: fixed;
+    right: 20px;
+    color: var(--red-color);
+    transform: scale(1.2);
+    cursor: pointer;
+}

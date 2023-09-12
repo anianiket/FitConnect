@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   gymInfo!: Gym;
 
   constructor(private gymService: GymService) { }
-  
+
   ngOnInit(): void {
     this.getGymInfo();
   }
@@ -47,6 +47,12 @@ export class HomeComponent implements OnInit {
   adminUpdate: boolean = false;
 
   updateGymInfo() {
+    if(true) {
+      this.gymService.updateGymInfo(this.gymInfo).subscribe((data) => {
+        console.log("Updated Gym Info:", data);
+        this.gymInfo = data;
+      })
+    }
     this.gymUpdate = false;
   }
 

@@ -1,27 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Trainer } from 'src/app/models/trainer.model';
+import { GymService } from 'src/app/services/gym.service';
 
 @Component({
   selector: 'app-trainers',
   templateUrl: './trainers.component.html',
   styleUrls: ['./trainers.component.css']
 })
-export class TrainersComponent {
-  trainerList: Trainer[] = [{
-    trainerId: '1',
-    trainerName: 'Trainer 1',
-    trainerCategory: 'Fitness',
-    trainerBio: 'Certified fitness trainer with 10+ years of experience.',
-    trainerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf-fGVYY3FqbIp77vSi-2koJZBCLkzGBI3Qw&usqp=CAU',
-  },
-  {
-    trainerId: '2',
-    trainerName: 'Trainer 2',
-    trainerCategory: 'Yoga',
-    trainerBio: 'Experienced yoga instructor specializing in Hatha yoga.',
-    trainerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrlH_qhF_Pq4ZhcyteIgPizqJcvZIvPliAaw&usqp=CAU',
-  },
-  ];
+export class TrainersComponent implements OnInit{
+
+  constructor(private gymService: GymService) { }
+  ngOnInit() {
+    this.getTrainerList();
+  }  
+  trainerList: Trainer[] = [];
 
   selectedTrainer: Trainer | null = null;
   formMode = false;
@@ -29,6 +21,13 @@ export class TrainersComponent {
   newTrainerName!: string;
   newTrainerCategory!: string;
   newTrainerBio!: string;
+  categoryList: string[] = [
+    'Dance',
+    'Yoga',
+    'Pilates',
+    'Martial Arts',
+    'Fitness'
+  ]
 
   selectedImageFile: File | null = null;
 
@@ -36,11 +35,7 @@ export class TrainersComponent {
     this.selectedTrainer = trainer;
   }
 
-  ngOnInit() {
-    if (this.trainerList.length > 0) {
-      this.selectedTrainer = this.trainerList[0];
-    }
-  }
+
 
   updateTrainerForm(trainer: Trainer) {
     this.formMode = true;
@@ -59,20 +54,65 @@ export class TrainersComponent {
     this.selectedImageFile = null;
   }
 
-  createTrainer() {
-    if (this.selectedImageFile) {
-      console.log('Selected Image File:', this.selectedImageFile);
-    }
-
+  closeForm() {
     this.formMode = false;
+    this.updateMode = false;
+  }
+
+  getTrainerList() {
+    this.gymService.getTrainers().subscribe((data) => {
+      console.log("Trainer List:", data);
+      this.trainerList = data;
+      if (data == null || data.length == 0) {
+        this.addTrainerForm();
+      } else {
+        this.selectedTrainer = this.trainerList[0];
+      }
+    });
+  }
+
+  createTrainer() {
+    if(this.selectedImageFile && this.newTrainerName && this.newTrainerCategory && this.newTrainerBio) {
+      const trainer = new FormData();
+      trainer.append('trainerName', this.newTrainerName);
+      trainer.append('trainerCategory', this.newTrainerCategory);
+      trainer.append('trainerBio', this.newTrainerBio);
+      trainer.append('trainerImage', this.selectedImageFile);
+      this.gymService.addATrainer(trainer).subscribe((data) => {
+        console.log("Trainer Added:", data);
+        this.getTrainerList();
+        this.closeForm();
+      }
+      );
+    } 
+
   }
 
   updateTrainer() {
-    
+    if(this.selectedTrainer) {
+      const trainer = new FormData();
+      trainer.append('trainerName', this.newTrainerName);
+      trainer.append('trainerCategory', this.newTrainerCategory);
+      trainer.append('trainerBio', this.newTrainerBio);
+      if(this.selectedImageFile) {
+        trainer.append('trainerImage', this.selectedImageFile);
+      }
+      this.gymService.updateTrainer(this.selectedTrainer.trainerId, trainer).subscribe((data) => {
+        console.log("Trainer Updated:", data);
+        this.getTrainerList();
+        this.closeForm();
+      }
+      );
+    }
   }
 
   deleteTrainer(trainerId: string) {
-
+    if(this.selectedTrainer && confirm("Are you sure you want to delete this trainer?")) {
+      this.gymService.deleteTrainer(trainerId).subscribe((data) => {
+        console.log("Trainer Deleted:", data);
+        this.getTrainerList();
+      });
+    }
   }
 
   onImageSelect(event: any) {

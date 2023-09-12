@@ -11,12 +11,12 @@
         </div>
     </div>
 
-    <div class="plan-details" *ngIf="selectedPlan && !formMode">
+    <div class="plan-details" *ngIf="!formMode">
         <button mat-raised-button color="warn" (click)="addPlanForm()" class="full-width-button">
             <span class="large-bold-text">+ ADD A NEW PLAN</span>
         </button>
 
-        <div class="plan-details-card">
+        <div class="plan-details-card" *ngIf="selectedPlan && !formMode">
             <h2>Plan Details</h2>
             <p><strong>Name:</strong> {{ selectedPlan.planName }}</p>
             <p><strong>Price:</strong> ₹{{ selectedPlan.planPrice }}</p>
@@ -34,6 +34,7 @@
     </div>
 
     <div class="plan-details" *ngIf="formMode">
+        <span class="close-form" (click)="closeForm()" ><mat-icon>close</mat-icon></span>
         <h2>{{ updateMode ? 'Edit Plan' : 'Add Plan' }}</h2>
         <form class="plan-form" (submit)="updateMode ? updatePlan() : createPlan()">
             <mat-form-field>
