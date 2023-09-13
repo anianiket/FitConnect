@@ -3,8 +3,6 @@ package com.stackroute.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -13,8 +11,6 @@ public class PaymentModel {
 
 	@Id
 	private String paymentId;
-	
-
 	private String userEmail;
 	private String paymentTitle;
 	private Integer amount;
@@ -22,6 +18,7 @@ public class PaymentModel {
 	private String paymentMode;
 	private Date Timestamp;
 	private String currency;
+	private String key;
 	
 	public String getPaymentId() {
 		return paymentId;
@@ -76,10 +73,15 @@ public class PaymentModel {
 	public PaymentModel() {
 		
 	}
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
+	public PaymentModel(String paymentId, String userEmail, String paymentTitle, Integer amount, String paymentStatus,
+			String paymentMode, Date timestamp, String currency, String key) {
 	
-	public PaymentModel(String paymentId, String currency, Integer amount, String userEmail,
-						String paymentStatus, String paymentTitle, String paymentMode, Date timestamp) {
-		super();
 		this.paymentId = paymentId;
 		this.userEmail = userEmail;
 		this.paymentTitle = paymentTitle;
@@ -88,7 +90,9 @@ public class PaymentModel {
 		this.paymentMode = paymentMode;
 		Timestamp = timestamp;
 		this.currency = currency;
+		this.key = key;
 	}
+	
 	
 //	public PaymentModel(String paymentId, String currency, Integer amount) {
 //		super();
