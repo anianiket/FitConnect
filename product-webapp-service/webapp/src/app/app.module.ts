@@ -34,6 +34,9 @@ import { EquipmentsComponent } from './components/equipments/equipments.componen
 import { TrainersComponent } from './components/trainers/trainers.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { ChatsComponent } from './components/chats/chats.component';
+import { UserHomeComponent } from './components/user-home/user-home.component';
+import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
+import { MembershipComponent } from './components/membership/membership.component';
 
 
 @NgModule({
@@ -50,7 +53,10 @@ import { ChatsComponent } from './components/chats/chats.component';
     EquipmentsComponent,
     TrainersComponent,
     GalleryComponent,
-    ChatsComponent
+    ChatsComponent,
+    UserHomeComponent,
+    UserSidebarComponent, 
+    MembershipComponent
   ],
   imports: [
     BrowserModule,

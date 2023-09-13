@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Payment } from 'src/app/models/payment.model';
+import { PaymentServiceService } from 'src/app/services/payment-service.service';
 
 @Component({
   selector: 'app-payments',
@@ -7,98 +8,9 @@ import { Payment } from 'src/app/models/payment.model';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent {
-  paymentList: Payment[] = [
-    {
-      paymentId: 1,
-      userEmail: 'user1@example.com',
-      paymentTitle: 'Payment 1',
-      amount: 100.0,
-      paymentStatus: 'Success',
-      paymentMode: 'Credit Card',
-      timestamp: '2023-09-08T12:00:00',
-    },
-    {
-      paymentId: 2,
-      userEmail: 'user2@example.com',
-      paymentTitle: 'Payment 2',
-      amount: 150.0,
-      paymentStatus: 'Fail',
-      paymentMode: 'PayPal',
-      timestamp: '2023-09-08T13:30:00',
-    },
-    {
-      paymentId: 1,
-      userEmail: 'user1@example.com',
-      paymentTitle: 'Payment 1',
-      amount: 100.0,
-      paymentStatus: 'Success',
-      paymentMode: 'Credit Card',
-      timestamp: '2023-09-08T12:00:00',
-    },
-    {
-      paymentId: 2,
-      userEmail: 'user2@example.com',
-      paymentTitle: 'Payment 2',
-      amount: 150.0,
-      paymentStatus: 'Fail',
-      paymentMode: 'PayPal',
-      timestamp: '2023-09-08T13:30:00',
-    },
-    {
-      paymentId: 1,
-      userEmail: 'user1@example.com',
-      paymentTitle: 'Payment 1',
-      amount: 100.0,
-      paymentStatus: 'Success',
-      paymentMode: 'Credit Card',
-      timestamp: '2023-09-08T12:00:00',
-    },
-    {
-      paymentId: 2,
-      userEmail: 'user2@example.com',
-      paymentTitle: 'Payment 2',
-      amount: 150.0,
-      paymentStatus: 'Fail',
-      paymentMode: 'PayPal',
-      timestamp: '2023-09-08T13:30:00',
-    },
-    {
-      paymentId: 1,
-      userEmail: 'user1@example.com',
-      paymentTitle: 'Payment 1',
-      amount: 100.0,
-      paymentStatus: 'Success',
-      paymentMode: 'Credit Card',
-      timestamp: '2023-09-08T12:00:00',
-    },
-    {
-      paymentId: 2,
-      userEmail: 'user2@example.com',
-      paymentTitle: 'Payment 2',
-      amount: 150.0,
-      paymentStatus: 'Fail',
-      paymentMode: 'PayPal',
-      timestamp: '2023-09-08T13:30:00',
-    },
-    {
-      paymentId: 1,
-      userEmail: 'user1@example.com',
-      paymentTitle: 'Payment 1',
-      amount: 100.0,
-      paymentStatus: 'Success',
-      paymentMode: 'Credit Card',
-      timestamp: '2023-09-08T12:00:00',
-    },
-    {
-      paymentId: 2,
-      userEmail: 'user2@example.com',
-      paymentTitle: 'Payment 2',
-      amount: 150.0,
-      paymentStatus: 'Fail',
-      paymentMode: 'PayPal',
-      timestamp: '2023-09-08T13:30:00',
-    }
-  ];
+  constructor(private ps: PaymentServiceService) {}
+
+  paymentList: Payment[] = [];
 
   selectedPayment: Payment | null = null;
 
@@ -107,6 +19,13 @@ export class PaymentsComponent {
       this.selectedPayment = this.paymentList[0];
     }
   }
+
+  getAllTransactions(){
+    this.ps.getAllTransactions().subscribe((response: any)=>{
+      this.paymentList=response;
+    })
+  }
+
   selectPayment(payment: Payment) {
     this.selectedPayment = payment;
   }
