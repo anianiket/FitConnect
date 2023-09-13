@@ -62,7 +62,7 @@ public class PaymentService {
 			String paymentMode = "UPI";
 			Date Timestamp = order.get("created_at");
 			
-			PaymentModel payment = new PaymentModel(paymentId, currency, amount, userEmail, paymentStatus, paymentTitle, 				paymentMode, Timestamp);
+			PaymentModel payment = new PaymentModel(paymentId, userEmail, paymentTitle, amount, paymentStatus, paymentMode, Timestamp, currency, KEY);
 			paymentRepository.save(payment);
 			return payment;
 	}
