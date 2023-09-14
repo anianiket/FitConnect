@@ -31,6 +31,10 @@ export class GymService {
     return this.http.get<Slot[]>(`${this.apiUrl}/slots`);
   }
 
+  getSlotsByDate(date: string): Observable<Slot[]> {
+    return this.http.get<Slot[]>(`${this.apiUrl}/slots/by-date/${date}`);
+  }
+
   addASlot(slot: Slot): Observable<Slot> {
     return this.http.post<Slot>(`${this.apiUrl}/slots`, slot);
   }

@@ -5,8 +5,8 @@ export interface User {
   userAge: number;
   userMobile: string;
   userProfilePicUrl: string;
-  userHeight: string;
-  userWeight: number;
+  height: number;
+  weight: number;
   planName: string | null;
   planPrice: number | null;
   planDuration: string | null;

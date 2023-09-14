@@ -132,10 +132,31 @@ export class EquipmentsComponent implements OnInit {
     return equipment.quantity > 0;
   }
 
+  selectImage() {
+    const fileInput = document.getElementById('mediaImage');
+    if (fileInput) {
+        fileInput.click();
+    }
+}
+
   onImageSelect(event: any) {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       this.selectedImageFile = fileInput.files[0];
     }
+  }
+
+  getSelectedImageName() {
+    if (this.selectedImageFile) {
+      return this.selectedImageFile.name;
+    }
+    return null;
+  }
+
+  imagePreview() {
+    if (this.selectedImageFile) {
+      return URL.createObjectURL(this.selectedImageFile);
+    }
+    return null;
   }
 }

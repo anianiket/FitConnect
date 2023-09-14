@@ -1,5 +1,5 @@
-export interface Gym {
-    gymName: string;
-    gymAddress: string;
-    mobile: string;
+export class Gym {
+    gymName!: string;
+    gymAddress!: string;
+    mobile!: string;
 }

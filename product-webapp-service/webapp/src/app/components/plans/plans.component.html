@@ -1,42 +1,50 @@
-<div class="plans-container">
-    <div class="plan-list">
-        <h2 class="plan-list-title">Plan List</h2>
-        <div class="plan-card" *ngFor="let plan of planList" (click)="selectPlan(plan)"
+<div class="items-container">
+    <div class="items-list">
+        <h2 class="items-list-title">Plan List</h2>
+        <div class="items-card" *ngFor="let plan of planList" (click)="selectPlan(plan)"
             [class.selected]="plan === selectedPlan">
-            <div class="plan-card-title"> {{ plan.planName }}</div>
-            <div class="plan-card-footer">
+            <div class="items-card-title"> {{ plan.planName }}</div>
+            <div class="items-card-footer">
                 <p><strong>Duration:</strong> {{ plan.planDuration }}</p>
-                <p class="price"><strong>₹ {{ plan.planPrice }}</strong></p>
+                <p class="orange-badge"><strong>₹ {{ plan.planPrice }}</strong></p>
             </div>
+        </div>
+        <div *ngIf="planList == null || planList.length == 0" class="item-status">
+            <p> <mat-icon>search</mat-icon> No plans available </p>
         </div>
     </div>
 
-    <div class="plan-details" *ngIf="!formMode">
+    <div class="items-details" *ngIf="!formMode">
         <button mat-raised-button color="warn" (click)="addPlanForm()" class="full-width-button">
             <span class="large-bold-text">+ ADD A NEW PLAN</span>
         </button>
 
-        <div class="plan-details-card" *ngIf="selectedPlan && !formMode">
-            <h2>Plan Details</h2>
+        <div class="items-details-card" *ngIf="selectedPlan && !formMode">
+            <span class="item-actions"  [matMenuTriggerFor]="planCardActionsMenu">
+                <mat-icon>more_vert</mat-icon>
+            </span>
+        
+            <mat-menu #planCardActionsMenu="matMenu" xPosition="before">
+                <a mat-menu-item tabindex="0" (click)="updatePlanForm(selectedPlan)">
+                    <mat-icon>edit</mat-icon> Edit
+                </a>
+                <a mat-menu-item tabindex="0" (click)="deletePlan(selectedPlan.planId)">
+                    <mat-icon>delete_forever</mat-icon> Delete
+                </a>
+            </mat-menu>
+            <h2 class="items-title">Plan Details</h2>
             <p><strong>Name:</strong> {{ selectedPlan.planName }}</p>
             <p><strong>Price:</strong> ₹{{ selectedPlan.planPrice }}</p>
             <p><strong>Duration:</strong> {{ selectedPlan.planDuration }}</p>
-
-            <div class="plan-card-actions">
-                <button mat-raised-button color="primary" (click)="updatePlanForm(selectedPlan)">Update</button>
-
-                <button mat-raised-button color="warn" (click)="deletePlan(selectedPlan.planId)">Delete</button>                
-            </div>
-
-
+            
         </div>
 
     </div>
 
-    <div class="plan-details" *ngIf="formMode">
+    <div class="items-details" *ngIf="formMode">
         <span class="close-form" (click)="closeForm()" ><mat-icon>close</mat-icon></span>
-        <h2>{{ updateMode ? 'Edit Plan' : 'Add Plan' }}</h2>
-        <form class="plan-form" (submit)="updateMode ? updatePlan() : createPlan()">
+        <h2 class="items-title">{{ updateMode ? 'Edit Plan' : 'Add Plan' }}</h2>
+        <form class="items-form" (submit)="updateMode ? updatePlan() : createPlan()">
             <mat-form-field>
                 <mat-label for="name">Name</mat-label>
                 <input matInput type="text" id="name" name="name" required [(ngModel)]="newPlanName">

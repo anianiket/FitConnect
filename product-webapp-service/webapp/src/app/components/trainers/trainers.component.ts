@@ -121,5 +121,26 @@ export class TrainersComponent implements OnInit{
       this.selectedImageFile = fileInput.files[0];
     }
   }
+
+  selectImage() {
+    const fileInput = document.getElementById('mediaImage');
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  getSelectedImageName() {
+    if (this.selectedImageFile) {
+      return this.selectedImageFile.name;
+    }
+    return null;
+  }
+
+  imagePreview() {
+    if (this.selectedImageFile) {
+      return URL.createObjectURL(this.selectedImageFile);
+    }
+    return null;
+  }
 }
 
