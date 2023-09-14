@@ -9,7 +9,7 @@ public interface UserActivityService {
 	  public UserActivity bookSlot(UserActivity userActivity);
 	  public UserActivity cancelSlot(int activityId);
 	  public UserActivity rescheduleSlot(int activityId, UserActivity userActivity);
-	  public UserActivity findBySlotNumber(String slotNumber);
+	  public List<UserActivity> findBySlotNumber(String slotNumber);
 	  public  List<UserActivity> getUserActivityBySlotStatus(List<UserActivity.SlotStatus> slotStatusList);
 	  public List<UserActivity> getUserActivityListByUserEmail(String userEmail);
 }

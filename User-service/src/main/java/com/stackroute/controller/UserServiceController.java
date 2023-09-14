@@ -1,10 +1,13 @@
 package com.stackroute.controller;
 
+import java.util.List;
+
 //import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +22,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.stackroute.exception.ImageUploadException;
 import com.stackroute.exception.UserAlreadyExistsException;
+import com.stackroute.model.UserDTO;
 import com.stackroute.model.UserLoginData;
 import com.stackroute.model.UserService;
 import com.stackroute.service.UserServiceService;
 
 @RestController
-@RequestMapping("/userservice")
+@CrossOrigin("*")	
+@RequestMapping("/api/v1/user-service/users")
 public class UserServiceController {
 
 	@Autowired
@@ -45,22 +50,18 @@ public class UserServiceController {
 		return "testing the output";
 	}
 	
-	
-	
-	
-	
 	@PostMapping("/registerUser")
 	public ResponseEntity<?> registerUser(@RequestBody UserService user){
 		ResponseEntity<?> entity;
 		try {
-			UserService createdUser=userService.registerUser(user);
+			UserDTO createdUser=userService.registerUser(user);
 			if(createdUser!=null) {
 				UserLoginData login= new UserLoginData();
 				login.setUserEmail(user.getUserEmail());
 				login.setUserPasswordHash(user.getUserPasswordHash());
 				
 				String otherServiceUrl="http://localhost:8002/auth/addNewUser";
-				entity=new ResponseEntity<UserService>(createdUser, HttpStatus.OK);
+				entity=new ResponseEntity<UserDTO>(createdUser, HttpStatus.OK);
 			}else {
 				entity=new ResponseEntity<String>("Cant be added", HttpStatus.CONFLICT);
 			}
@@ -74,16 +75,29 @@ public class UserServiceController {
 		
 	}
 	
+	@GetMapping("")
+	public ResponseEntity<?> getAllUsers() {
+		ResponseEntity<?> entity = null;
+		
+		try {
+			List<UserDTO> userList = userService.getAllUsers();
+			entity = new ResponseEntity<List<UserDTO>>(userList, HttpStatus.OK);
+		} catch(Exception e) {
+			entity = new ResponseEntity<String>("Error", HttpStatus.CONFLICT);
+		}
+		
+		return entity;
+	}
 	
 	@PutMapping("/updateUser/{userEmail}")
 	public ResponseEntity<?> updateUser(@PathVariable String userEmail, @RequestBody UserService user){
 		ResponseEntity<?> entity;
 		
 		try {
-			UserService updatedUser= userService.updateUser(user, userEmail);
+			UserDTO updatedUser= userService.updateUser(user, userEmail);
 			
 			if(updatedUser!=null) {
-				entity= new ResponseEntity<UserService>(updatedUser, HttpStatus.OK);
+				entity= new ResponseEntity<UserDTO>(updatedUser, HttpStatus.OK);
 			}else {
 				entity= new ResponseEntity<String>("Failed to update", HttpStatus.CONFLICT);
 			}
@@ -94,17 +108,15 @@ public class UserServiceController {
 		
 	}
 	
-	
-	
 	@PutMapping("/updatePlan/{userEmail}")
 	public ResponseEntity<?> updatePlan(@PathVariable String userEmail, @RequestBody UserService user){
 		ResponseEntity<?> entity;
 		
 		try {
-			UserService updatedPlan= userService.updatePlan(user, userEmail);
+			UserDTO updatedPlan= userService.updatePlan(user, userEmail);
 			
 			if(updatedPlan!=null) {
-				entity= new ResponseEntity<UserService>(updatedPlan, HttpStatus.OK);
+				entity= new ResponseEntity<UserDTO>(updatedPlan, HttpStatus.OK);
 			}else {
 				entity= new ResponseEntity<String>("Failed to update", HttpStatus.CONFLICT);
 			}
@@ -121,10 +133,10 @@ public class UserServiceController {
 		ResponseEntity<?> entity;
 		
 		try {
-			UserService user= userService.getUserByEmail(userEmail);
+			UserDTO user= userService.getUserByEmail(userEmail);
 			
 			if(user!=null) {
-				entity= new ResponseEntity<UserService>(user, HttpStatus.OK);
+				entity= new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 			}else {
 				entity = new ResponseEntity<String>("User with email not found", HttpStatus.CONFLICT);
 			}
@@ -133,6 +145,7 @@ public class UserServiceController {
 		}
 		return entity;
 	}
+	
 	
 	@PostMapping("/updateProfilePic/{userEmail}")
 	public ResponseEntity<String> uploadProfilePic(@PathVariable String userEmail ,@RequestParam("file") MultipartFile file){

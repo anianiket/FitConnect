@@ -1,11 +1,11 @@
 package com.stackroute.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,19 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.stackroute.exception.SlotNotFoundException;
 import com.stackroute.exception.SlotOccupiedException;
 import com.stackroute.model.UserActivity;
-import com.stackroute.model.UserActivity.SlotStatus;
-import com.stackroute.repository.UserActivityRepository;
 import com.stackroute.service.UserActivityService;
 
 @RestController
-@RequestMapping("/slot")
+@CrossOrigin("*")
+@RequestMapping("/api/v1/user-service/slots")
 public class UserActivityController {
 
 	@Autowired
@@ -34,8 +32,6 @@ public class UserActivityController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-//	This is removed once authentication is implemented
-	private final static String USEREMAIL = "username@gmail.com";
 	
 	@GetMapping("/home")
 	public ResponseEntity<?> home(){
@@ -71,9 +67,7 @@ public class UserActivityController {
 	            return new ResponseEntity<>("Error while booking slot: " + ex.getMessage(), HttpStatus.CONFLICT);
 	        }
 		}
-		
-		
-	
+
 	@PutMapping("/cancel/{activityId}")
 	public ResponseEntity<?> cancelSlot(@PathVariable int activityId){
 		 try {
@@ -116,7 +110,7 @@ public class UserActivityController {
 	@GetMapping("/slotByNumber/{slotNumber}")
 	public ResponseEntity<?> findBySlotNumber(@PathVariable String slotNumber){
 		try {
-			UserActivity slot = activityService.findBySlotNumber(slotNumber);
+			List<UserActivity> slot = activityService.findBySlotNumber(slotNumber);
 			if (slot != null) {
 				return new ResponseEntity<>(slot, HttpStatus.OK);
 			} else {
@@ -129,11 +123,10 @@ public class UserActivityController {
 		}
 	}
 	
-	
-	@GetMapping("/user-email")
-	public ResponseEntity<List<UserActivity>> getUserActivityListByUserEmail() {
+	@GetMapping("/user-email/{userEmail}")
+	public ResponseEntity<List<UserActivity>> getUserActivityListByUserEmail(@PathVariable("userEmail") String userEmail) {
 	    try {
-	        List<UserActivity> userActivityList = activityService.getUserActivityListByUserEmail(USEREMAIL);
+	        List<UserActivity> userActivityList = activityService.getUserActivityListByUserEmail(userEmail);
 	        
 	        if (!userActivityList.isEmpty()) {
 	            return new ResponseEntity<>(userActivityList, HttpStatus.OK);

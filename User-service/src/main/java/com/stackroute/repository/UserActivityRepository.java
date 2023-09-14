@@ -10,9 +10,11 @@ import com.stackroute.model.UserActivity;
 
 public interface UserActivityRepository extends JpaRepository<UserActivity, Integer>{
 	
-	public UserActivity findBySlotNumber(String slotNumber);
+	public UserActivity findBySlotNumberAndUserEmail(String slotNumber, String userEmail);
 	
 	public  List<UserActivity> findBySlotStatusIn(List<UserActivity.SlotStatus> slotStatusList);
 	
 	public List<UserActivity> findByUserEmail(String userEmail);
+
+	public List<UserActivity> findBySlotNumber(String slotNumber);
 }
