@@ -28,7 +28,7 @@ public class PaymentService {
 	public PaymentModel createTransaction(Double amount) {
 		
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("amount", amount);
+		jsonObject.put("amount", (amount*100));
 		jsonObject.put("currency", CURRENCY);
 //		jsonObject.put("userEmail", "abc@gmail.com");
 //		jsonObject.put("paymentModel", "UPI");
