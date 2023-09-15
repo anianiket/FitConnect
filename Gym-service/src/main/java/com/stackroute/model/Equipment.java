@@ -22,7 +22,47 @@ public class Equipment {
     private String equipmentDescription;
     private Integer quantity;
     
-    public void update(Equipment updatedEquipment) {
+    public String getEquipmentId() {
+		return equipmentId;
+	}
+
+	public void setEquipmentId(String equipmentId) {
+		this.equipmentId = equipmentId;
+	}
+
+	public String getEquipmentName() {
+		return equipmentName;
+	}
+
+	public void setEquipmentName(String equipmentName) {
+		this.equipmentName = equipmentName;
+	}
+
+	public String getEquipmentImage() {
+		return equipmentImage;
+	}
+
+	public void setEquipmentImage(String equipmentImage) {
+		this.equipmentImage = equipmentImage;
+	}
+
+	public String getEquipmentDescription() {
+		return equipmentDescription;
+	}
+
+	public void setEquipmentDescription(String equipmentDescription) {
+		this.equipmentDescription = equipmentDescription;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public void update(Equipment updatedEquipment) {
         if (updatedEquipment.getEquipmentName() != null) {
             this.setEquipmentName(updatedEquipment.getEquipmentName());
         }
@@ -36,4 +76,20 @@ public class Equipment {
             this.setQuantity(updatedEquipment.getQuantity());
         }
     }
+
+	public Equipment(String equipmentId, String equipmentName, String equipmentImage, String equipmentDescription,
+			Integer quantity) {
+		super();
+		this.equipmentId = equipmentId;
+		this.equipmentName = equipmentName;
+		this.equipmentImage = equipmentImage;
+		this.equipmentDescription = equipmentDescription;
+		this.quantity = quantity;
+	}
+
+	public Equipment() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }

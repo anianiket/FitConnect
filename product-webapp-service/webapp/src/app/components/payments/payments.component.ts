@@ -18,12 +18,11 @@ export class PaymentsComponent {
     if (this.paymentList.length > 0) {
       this.selectedPayment = this.paymentList[0];
     }
-  }
-
-  getAllTransactions(){
-    this.ps.getAllTransactions().subscribe((response: any)=>{
-      this.paymentList=response;
-    })
+    this.ps.getAllTransactions()
+    .subscribe((response: any)=>{
+      this.paymentList = response;
+      console.log("Payment received");
+    });
   }
 
   selectPayment(payment: Payment) {

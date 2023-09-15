@@ -9,7 +9,7 @@ export class PaymentServiceService {
   constructor(private httpClient: HttpClient) {}
 
     public createTransaction(amount: any) {
-      return this.httpClient.get("http://localhost:8012/payment/created/"+amount);
+      return this.httpClient.post("http://localhost:8012/payment/created?amount="+amount, null);
     }
 
     public getAllTransactions() {

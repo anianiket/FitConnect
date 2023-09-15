@@ -22,7 +22,47 @@ public class Trainer {
     private String trainerBio;
     private String trainerImage;
 
-    public void update(Trainer updatedTrainer) {
+    public String getTrainerId() {
+		return trainerId;
+	}
+
+	public void setTrainerId(String trainerId) {
+		this.trainerId = trainerId;
+	}
+
+	public String getTrainerName() {
+		return trainerName;
+	}
+
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
+	}
+
+	public String getTrainerCategory() {
+		return trainerCategory;
+	}
+
+	public void setTrainerCategory(String trainerCategory) {
+		this.trainerCategory = trainerCategory;
+	}
+
+	public String getTrainerBio() {
+		return trainerBio;
+	}
+
+	public void setTrainerBio(String trainerBio) {
+		this.trainerBio = trainerBio;
+	}
+
+	public String getTrainerImage() {
+		return trainerImage;
+	}
+
+	public void setTrainerImage(String trainerImage) {
+		this.trainerImage = trainerImage;
+	}
+
+	public void update(Trainer updatedTrainer) {
         if (updatedTrainer.getTrainerName() != null) {
             this.setTrainerName(updatedTrainer.getTrainerName());
         }
@@ -36,4 +76,19 @@ public class Trainer {
         	this.setTrainerImage(updatedTrainer.getTrainerImage());
         }
     }
+
+	public Trainer(String trainerId, String trainerName, String trainerCategory, String trainerBio,
+			String trainerImage) {
+		super();
+		this.trainerId = trainerId;
+		this.trainerName = trainerName;
+		this.trainerCategory = trainerCategory;
+		this.trainerBio = trainerBio;
+		this.trainerImage = trainerImage;
+	}
+
+	public Trainer() {
+		// TODO Auto-generated constructor stub
+	}
+	
 }

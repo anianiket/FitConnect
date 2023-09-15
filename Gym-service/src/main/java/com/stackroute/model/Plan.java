@@ -21,7 +21,55 @@ public class Plan {
 	private Double planPrice;
 	private String planDuration;
 	
-    public void update(Plan updatedPlan) {
+	
+	
+    public String getPlanId() {
+		return planId;
+	}
+
+	public void setPlanId(String planId) {
+		this.planId = planId;
+	}
+
+
+
+	public String getPlanName() {
+		return planName;
+	}
+
+
+
+	public void setPlanName(String planName) {
+		this.planName = planName;
+	}
+
+
+
+	public Double getPlanPrice() {
+		return planPrice;
+	}
+
+
+
+	public void setPlanPrice(Double planPrice) {
+		this.planPrice = planPrice;
+	}
+
+
+
+	public String getPlanDuration() {
+		return planDuration;
+	}
+
+
+
+	public void setPlanDuration(String planDuration) {
+		this.planDuration = planDuration;
+	}
+
+
+
+	public void update(Plan updatedPlan) {
         if (updatedPlan.getPlanName() != null) {
             this.setPlanName(updatedPlan.getPlanName());
         }

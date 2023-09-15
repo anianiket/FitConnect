@@ -18,7 +18,37 @@ public class GymInfo {
 	private String gymAddress;
 	private String mobile;
 
-    public void update(GymInfo updatedGymInfo) {
+    public String getGymName() {
+		return gymName;
+	}
+
+
+	public void setGymName(String gymName) {
+		this.gymName = gymName;
+	}
+
+
+	public String getGymAddress() {
+		return gymAddress;
+	}
+
+
+	public void setGymAddress(String gymAddress) {
+		this.gymAddress = gymAddress;
+	}
+
+
+	public String getMobile() {
+		return mobile;
+	}
+
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
+	public void update(GymInfo updatedGymInfo) {
         if (updatedGymInfo.getGymAddress() != null) {
             this.setGymAddress(updatedGymInfo.getGymAddress());
         }

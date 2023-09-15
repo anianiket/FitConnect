@@ -21,7 +21,48 @@ public class MediaFile {
 	private String mediaCategory;
 	private String mediaUrl;
 	
-    public void update(MediaFile updatedMediaFile) {
+	
+    public String getMediaId() {
+		return mediaId;
+	}
+
+
+	public void setMediaId(String mediaId) {
+		this.mediaId = mediaId;
+	}
+
+
+	public String getMediaName() {
+		return mediaName;
+	}
+
+
+	public void setMediaName(String mediaName) {
+		this.mediaName = mediaName;
+	}
+
+
+	public String getMediaCategory() {
+		return mediaCategory;
+	}
+
+
+	public void setMediaCategory(String mediaCategory) {
+		this.mediaCategory = mediaCategory;
+	}
+
+
+	public String getMediaUrl() {
+		return mediaUrl;
+	}
+
+
+	public void setMediaUrl(String mediaUrl) {
+		this.mediaUrl = mediaUrl;
+	}
+
+
+	public void update(MediaFile updatedMediaFile) {
         if (updatedMediaFile.getMediaName() != null) {
             this.setMediaName(updatedMediaFile.getMediaName());
         }
@@ -32,5 +73,20 @@ public class MediaFile {
             this.setMediaUrl(updatedMediaFile.getMediaUrl());
         }
     }
+
+
+	public MediaFile(String mediaId, String mediaName, String mediaCategory, String mediaUrl) {
+		super();
+		this.mediaId = mediaId;
+		this.mediaName = mediaName;
+		this.mediaCategory = mediaCategory;
+		this.mediaUrl = mediaUrl;
+	}
+
+
+	public MediaFile() {
+		// TODO Auto-generated constructor stub
+	}
+	
     
 }
