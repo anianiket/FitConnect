@@ -1,5 +1,7 @@
 package com.stackroute.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -20,6 +22,7 @@ public class Plan {
 	private String planName;
 	private Double planPrice;
 	private String planDuration;
+	private List<String> planDescription;
 	
 	
 	
@@ -78,6 +81,9 @@ public class Plan {
         }
         if (updatedPlan.getPlanDuration() != null) {
             this.setPlanDuration(updatedPlan.getPlanDuration());
+        }
+        if (updatedPlan.getPlanDescription() != null && !updatedPlan.getPlanDescription().isEmpty()) { 
+            this.setPlanDescription(updatedPlan.getPlanDescription()); 
         }
     }
     
