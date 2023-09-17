@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Document(collection = "MediaCollection")
 public class MediaFile {
 
@@ -85,7 +85,6 @@ public class MediaFile {
 
 
 	public MediaFile() {
-		// TODO Auto-generated constructor stub
 	}
 	
     
